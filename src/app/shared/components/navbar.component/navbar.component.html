@@ -1,0 +1,28 @@
+<aside class="w-50 h-11/12 fixed top-18 left-0 z-40    border-r border-red-300/50 flex flex-col font-mono p-[24px_16px]">
+  <div class="mb-8 ml-2">
+    <p class="text-cyan-100 font-bold">JUAN_DAVID</p>
+    <p class="text-red-200/40 text-xs font-bold">{{"Frotend architect" | uppercase}}</p>
+  </div>
+
+  <ul class="list-none flex-1">
+    @for (item of nav.items; track item.id) {
+      <li>
+        <a
+        [class.active]="nav.id() === item.id"
+         class="flex items-center gap-2.5 p-[10px_12px] hover:text-cyan-100 rounded-md text-red-200 text-sm" [href]="'#' + item.id"  (click)="$event.preventDefault(); nav.goTo(item.id)">
+          <i [class]="item.icon"></i>
+          <span>{{item.label}}</span>
+        </a>
+      </li>
+    }
+  </ul>
+
+  <div class="flex flex-col gap-2 text-sm text-red-200 border-t-2 border-[#262C3A] pt-4">
+    <a href="https://github.com/juanCabral-DJ" class="hover:text-cyan-400" target="_blank">
+      <i class="pi pi-github"></i> GitHub
+    </a>
+    <a href="https://linkedin.com/in/juan-david-cabral-b740a1329" class="hover:text-cyan-400" target="_blank">
+      <i class="pi pi-linkedin"></i> LinkedIn
+    </a>
+  </div>
+</aside>

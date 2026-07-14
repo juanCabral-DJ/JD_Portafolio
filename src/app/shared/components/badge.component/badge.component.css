@@ -1,0 +1,13 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.6rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: #E8EAED;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--badge-color, #DD0031);
+}
+
