@@ -1,1 +1,39 @@
-<p class="h-screen">skills.component works!</p>,
+<div class="flex flex-col gap-8 pl-5 w-11/12 mb-10">
+  <div class="flex flex-col justify-center items-center">
+    <h1 class="text-red-600 font-medium text-lg font-mono">02. tech_capabilities</h1>
+    <p class="text-3xl font-bold mb-5">The Tech Stack</p>
+
+    <div class="grid grid-cols-3 gap-2">
+      @for (category of categories; track category.title) {
+        <p-card
+          class="p-4 hover:border hover:border-cyan-400 bg-gray-500/20!"
+          [class.border-red-500]="category.emphasized"
+        >
+          <ng-template #header>
+            <p class="uppercase font-bold text-sm p-4 pb-0 flex justify-left items-center">
+              <i [class]="category.icon + ' text-cyan-400 pr-2'"></i>
+              {{ category.title }}
+            </p>
+          </ng-template>
+
+          <div class="flex flex-wrap gap-4  mt-5">
+            @for (tag of category.tags; track tag.label) {
+              <span
+                class="font-mono text-xs px-2 py-1 rounded border"
+                [class.bg-red-500]="tag.highlight"
+                [class.text-white]="tag.highlight"
+                [class.border-transparent]="tag.highlight"
+                [class.text-gray-300]="!tag.highlight"
+                [class.border-neutral-700]="!tag.highlight"
+                [class.bg-white/5]="!tag.highlight"
+              >
+                <span [class.text-red-400]="!tag.highlight" [class.opacity-80]="!tag.highlight">--{{ tag.prefix }}:</span>
+                {{ tag.label }}
+              </span>
+            }
+          </div>
+        </p-card>
+      }
+    </div>
+  </div>
+</div>

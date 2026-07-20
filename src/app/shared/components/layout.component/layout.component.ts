@@ -15,6 +15,7 @@ export class LayoutComponent {
   private observer?: IntersectionObserver;
 
   ngAfterViewInit(): void {
+    const mainEl = this.hostEl.nativeElement.querySelector('main');
     // AfterViewInit porque necesitamos que el <ng-content> ya esté renderizado
     const sections = this.nav.items
       .map((item) => document.getElementById(item.id))
@@ -34,6 +35,7 @@ export class LayoutComponent {
         }
       },
       {
+        root: mainEl,
         threshold: [0.25, 0.5, 0.75],
         rootMargin: '-15% 0px -35% 0px', // franja central de la pantalla
       },

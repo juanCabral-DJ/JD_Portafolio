@@ -27,7 +27,21 @@ export class NavbarServices {
     this.isManualScroll = true;
     this.setActive(id);
 
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const mainContainer = document.querySelector('main');
+    const targetElement = document.getElementById(id);
+
+    if (mainContainer && targetElement) {
+      const containerTop = mainContainer.getBoundingClientRect().top;
+      const targetTop = targetElement.getBoundingClientRect().top;
+      const targetPosition = targetTop - containerTop + mainContainer.scrollTop;
+
+      mainContainer.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth',
+      });
+    } else {
+      targetElement?.scrollIntoView({ behavior: 'smooth' });
+    }
 
     // libera el "candado" cuando el scroll suave termina (aprox.)
     window.clearTimeout(this.scrollTimeout);

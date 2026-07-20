@@ -1,3 +1,40 @@
 :host {
   display: block;
 }
+
+.about-photo {
+  position: relative;
+  width: 320px;
+  align-self: flex-start;
+}
+
+/* marco cian - el más cercano */
+.about-photo::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #22D3EE;
+  z-index: -1;
+}
+
+/* marco coral - el más alejado */
+.about-photo::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #FF5470;
+  z-index: -2; /* detrás incluso del cian */
+}
+
+.about-photo img {
+  position: relative;
+  display: block;
+  width: 100%;
+  /* sin border aquí */
+}
