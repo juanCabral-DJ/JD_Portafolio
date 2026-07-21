@@ -1,1 +1,54 @@
-<p>project-card.component works!</p>,
+<section
+  class="flex flex-col justify-between bg-[#111216] border border-[#2a2b32] w-full h-full text-white overflow-hidden rounded-none shadow-xl transition-all duration-300 hover:border-cyan-500/50"
+>
+  <app-project-card-header [label]="project()?.header" />
+
+  <div
+    class="w-full h-48 bg-[#0a0a0c] border-b border-[#2a2b32] overflow-hidden flex items-center justify-center"
+  >
+    @if (project()?.img) {
+      <img
+        [src]="project()?.img"
+        [alt]="project()?.label"
+        class="w-full h-full object-cover object-center "
+      />
+    } @else {
+      <div class="text-gray-600 font-mono text-xs">NO_IMAGE</div>
+    }
+  </div>
+
+  <div class="flex flex-col gap-3 p-4 flex-1">
+    <h2 class="text-lg font-bold font-mono text-white flex items-center gap-2">
+      <span class="text-[#00f2fe] font-bold">$</span>
+      <span>{{ project()?.label }}</span>
+    </h2>
+
+    <p class="text-sm text-red-200 font-sans leading-relaxed flex-1">
+      {{ project()?.text_short }}
+    </p>
+
+    <div class="flex flex-wrap gap-2 my-2">
+      @for (item of project()?.tech; track $index) {
+        <app-badge [label]="item" color="#00f2fe"></app-badge>
+      }
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3 p-4 pt-0 mt-auto">
+    <button
+      [disabled]="project()?.demo === false"
+      [hidden]="project()?.demo === false"
+      routerLink="/projects/detail"
+      class="w-full py-2 px-3 border border-[#00f2fe] text-[#00f2fe] font-mono text-xs font-bold uppercase tracking-wider text-center hover:bg-[#00f2fe]/10 transition-colors cursor-pointer"
+    >
+      DEMO
+    </button>
+
+    <button
+      routerLink="/projects/detail"
+      class="w-full py-2 px-3 border border-[#3a3b45] text-[#ffaa77] font-mono text-xs font-bold uppercase tracking-wider text-center hover:bg-white/5 transition-colors cursor-pointer"
+    >
+      SOURCE
+    </button>
+  </div>
+</section>

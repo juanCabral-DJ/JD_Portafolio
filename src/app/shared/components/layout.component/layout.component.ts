@@ -2,10 +2,13 @@ import { Component, ElementRef, inject } from '@angular/core';
 import { NavbarServices } from '../../../core/services/Navbar.services';
 import { NavbarComponent } from '../navbar.component/navbar.component';
 import { SidebarComponent } from '../sidebar.component/sidebar.component';
+import {Toast} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-layout',
-  imports: [NavbarComponent, SidebarComponent],
+  imports: [NavbarComponent, SidebarComponent, Toast],
+  providers: [MessageService],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

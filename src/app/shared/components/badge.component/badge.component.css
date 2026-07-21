@@ -1,13 +1,21 @@
 :host {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 0.6rem;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  color: #E8EAED;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--badge-color, #DD0031);
 }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 1px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--badge-color, #00f2fe);
+  background: rgba(0, 242, 254, 0.03);
+  border: 1px solid var(--badge-color, #00f2fe);
+  line-height: 1.2;
+}
+
 

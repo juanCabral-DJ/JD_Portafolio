@@ -1,6 +1,14 @@
-<div class="flex flex-col gap-8 pl-5 w-11/12 mb-10">
-<div class="flex flex-col p-5 pl-0 mb-5">
-  <h1 class="text-red-600 font-medium text-lg font-mono">03. selected_works</h1>
-  <p class="text-3xl font-bold mb-5">Project Archive</p>
+<div class="flex flex-col gap-8 pl-5  mb-10 w-full ">
+  <div class="flex flex-col p-5 pb-2 pl-0 ">
+    <h1 class="text-red-600 font-medium text-lg font-mono">03. selected_works</h1>
+    <p class="text-3xl font-bold mb-1">Project Archive</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mr-14">
+    @for (item of project; track item.id) {
+      <app-project-card [project]="item" />
+    }
+  </div>
 </div>
-</div>
+
+

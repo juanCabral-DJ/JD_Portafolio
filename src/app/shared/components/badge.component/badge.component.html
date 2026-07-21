@@ -1,8 +1,7 @@
-<span class="badge" [style.color]="color()"  >
+<span class="badge" [style.--badge-color]="color() || '#00f2fe'">
   @if (icon()) {
     <i [class]="icon()"></i>
   }
   {{ label() }}
 </span>
 
-<!--  El componente badge/ es una pieza pequeña y reutilizable que representa una sola tecnología o etiqueta visual — como los "chips" que viste en tu README de GitHub (Angular, TypeScript, Git, etc.), pero ahora como componente Angular en vez de una imagen estática. -->

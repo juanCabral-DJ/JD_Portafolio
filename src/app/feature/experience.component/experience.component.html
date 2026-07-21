@@ -1,1 +1,64 @@
-<p class="h-screen">experience.component works!</p>,
+<div class="w-full max-w-5xl mx-auto px-4 py-8 mb-10">
+  <!-- Section Header -->
+  <div class="flex flex-col justify-center items-center text-center mb-12">
+    <span class="text-[#ff4d4d] font-mono text-sm font-medium tracking-wide mb-1">04. history_log</span>
+    <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Experience & Growth</h2>
+  </div>
+
+  <!-- PrimeNG Timeline Base -->
+  <p-timeline [value]="events" align="alternate" class="custom-timeline w-full">
+    <!-- Custom Marker Dot Slot -->
+    <ng-template #marker let-event>
+      @let index = events.indexOf(event);
+      <div class="z-20 flex items-center justify-center rounded-full p-0.5 bg-[#0a0a0a]">
+        <div [class]="'w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center bg-[#0a0a0a] transition-all duration-300 ' + getMarkerClass(event, index)">
+          <div [class]="'w-2 h-2 rounded-full ' + getDotClass(event, index)"></div>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Custom Content Card Slot -->
+    <ng-template #content let-event>
+      @let index = events.indexOf(event);
+      @let isLeft = index % 2 === 0;
+
+      <div
+        class="bg-[#141414] border border-zinc-800/80 rounded-sm p-5 md:p-6 transition-all duration-300 hover:border-zinc-700/80 shadow-lg flex flex-col my-3"
+        [class.md:items-end]="isLeft"
+        [class.md:text-right]="isLeft"
+        [class.items-start]="!isLeft"
+        [class.text-left]="!isLeft"
+      >
+        <!-- Date -->
+        <span class="text-[#00f0ff] font-mono text-xs md:text-sm font-semibold tracking-wider uppercase mb-1">
+          {{ event.date }}
+        </span>
+
+        <!-- Title -->
+        <h3 class="text-white font-bold text-base md:text-lg mb-1">
+          {{ event.title }}
+        </h3>
+
+        <!-- Company / Location -->
+        <div
+          class="text-gray-400 font-mono italic text-xs md:text-sm mb-3 flex items-center gap-1.5 flex-wrap"
+          [class.md:justify-end]="isLeft"
+          [class.justify-start]="!isLeft"
+        >
+          @if (event.icon) {
+            <i [class]="event.icon + ' text-xs text-gray-400'"></i>
+          }
+          <span>{{ event.company }}</span>
+          @if (event.location) {
+            <span>- {{ event.location }}</span>
+          }
+        </div>
+
+        <!-- Description -->
+        <p class="text-gray-300 text-xs md:text-sm leading-relaxed font-sans">
+          {{ event.description }}
+        </p>
+      </div>
+    </ng-template>
+  </p-timeline>
+</div>

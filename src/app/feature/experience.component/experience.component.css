@@ -1,3 +1,65 @@
-:host {
-  display: block;
+/* PrimeNG Timeline Layout Fixes & Overrides */
+:host ::ng-deep .custom-timeline.p-timeline {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+:host ::ng-deep .custom-timeline .p-timeline-event {
+  display: flex;
+  position: relative;
+  min-height: 120px;
+}
+
+/* Align dot marker with top of the card */
+:host ::ng-deep .custom-timeline .p-timeline-event-separator {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  padding-top: 1.25rem;
+}
+
+:host ::ng-deep .custom-timeline .p-timeline-event-connector {
+  flex-grow: 1;
+  width: 1px !important;
+  background-color: rgba(39, 39, 42, 0.8) !important;
+}
+
+:host ::ng-deep .custom-timeline .p-timeline-event-marker {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+:host ::ng-deep .custom-timeline .p-timeline-event-opposite {
+  flex: 1;
+  padding: 0.5rem 1.5rem;
+}
+
+:host ::ng-deep .custom-timeline .p-timeline-event-content {
+  flex: 1;
+  padding: 0.5rem 1.5rem;
+}
+
+/* Responsive Mobile Layout Fixes (< 768px) */
+@media (max-width: 767px) {
+  :host ::ng-deep .custom-timeline.p-timeline-alternate .p-timeline-event {
+    flex-direction: row !important;
+  }
+
+  :host ::ng-deep .custom-timeline .p-timeline-event-opposite {
+    display: none !important;
+  }
+
+  :host ::ng-deep .custom-timeline .p-timeline-event-content {
+    flex: 1 !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0 !important;
+  }
 }
