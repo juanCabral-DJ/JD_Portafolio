@@ -1,17 +1,17 @@
 <nav
-  class="flex items-center fixed top-0 w-full   z-40 justify-between p-[16px_32px]   border-b  border-red-300/50 font-mono"
+  class="flex flex-col lg:flex-row items-center fixed top-0 w-full gap-3 md:gap-2 z-40 justify-between p-[16px_32px] bg-black border-b border-red-300/50 font-mono"
 >
-  <span class="text-red-600 text-4xl font-bold">JUAN_DAVID_CABRAL</span>
+  <span class="text-red-600 text-2xl sm:text-4xl font-bold">JUAN_DAVID_CABRAL</span>
 
-  <div class="flex gap-7 items-center">
-    <ul class="flex gap-7 list-none text-sm">
+  <div class="flex gap-4 sm:gap-7 items-center">
+    <ul class="grid grid-cols-3 md:flex  gap-4 md:gap-7 list-none text-[10px] xs:text-sm md:text-[15px]">
       @for (item of nav.items; track item.id) {
         <li>
           <a
-            class="text-red-200"
+            class="text-red-200 hover:text-cyan-400"
             [href]="'#' + item.id"
             [class.active]="nav.id() === item.id"
-             (click)="$event.preventDefault(); nav.goTo(item.id)"
+            (click)="$event.preventDefault(); nav.goTo(item.id)"
           >
             {{ item.label }}
           </a>

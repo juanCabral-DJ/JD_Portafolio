@@ -7,6 +7,7 @@ import { ProjectsComponent } from "./feature/projects.component/projects.compone
 import { ExperienceComponent } from "./feature/experience.component/experience.component";
 import { ContactComponent } from "./feature/contact.component/contact.component";
 import { ScrollRevealDirective } from "./shared/directives/scroll-reveal-directive/scroll-reveal-directive";
+import { Toast } from "primeng/toast";
 
 @Component({
   selector: 'app-root',

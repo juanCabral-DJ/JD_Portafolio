@@ -29,14 +29,18 @@ export class NavbarServices {
 
     const mainContainer = document.querySelector('main');
     const targetElement = document.getElementById(id);
+    const topHeader = document.querySelector('nav');
 
     if (mainContainer && targetElement) {
       const containerTop = mainContainer.getBoundingClientRect().top;
       const targetTop = targetElement.getBoundingClientRect().top;
-      const targetPosition = targetTop - containerTop + mainContainer.scrollTop;
+      const headerHeight = topHeader ? topHeader.getBoundingClientRect().height : 0;
+      // Offset universal: altura real de la cabecera + 10px de margen de respiro
+      const offset = headerHeight > 0 ? headerHeight + 10 : 20;
+      const targetPosition = targetTop - containerTop + mainContainer.scrollTop - offset;
 
       mainContainer.scrollTo({
-        top: targetPosition,
+        top: Math.max(0, targetPosition),
         behavior: 'smooth',
       });
     } else {

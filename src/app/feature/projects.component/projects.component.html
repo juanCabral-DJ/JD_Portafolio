@@ -1,10 +1,10 @@
-<div class="flex flex-col gap-8 pl-5  mb-10 w-full ">
+<div class="flex flex-col gap-8  pl-5  mb-10 w-full xl:w-[95%] ">
   <div class="flex flex-col p-5 pb-2 pl-0 ">
     <h1 class="text-red-600 font-medium text-lg font-mono">03. selected_works</h1>
     <p class="text-3xl font-bold mb-1">Project Archive</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mr-14">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-2 xl:gap-8 md:mr-14 lg:mr-0 lg:pr-6 p-0 mr-1">
     @for (item of project; track item.id) {
       <app-project-card [project]="item" />
     }
