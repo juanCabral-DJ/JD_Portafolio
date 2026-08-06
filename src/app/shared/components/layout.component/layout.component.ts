@@ -1,8 +1,9 @@
 import { Component, ElementRef, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavbarServices } from '../../../core/services/Navbar.services';
 import { NavbarComponent } from '../navbar.component/navbar.component';
 import { SidebarComponent } from '../sidebar.component/sidebar.component';
-import {Toast} from 'primeng/toast';
+import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -14,6 +15,7 @@ import { MessageService } from 'primeng/api';
 })
 export class LayoutComponent {
   private nav = inject(NavbarServices);
+  private router = inject(Router);
   private hostEl = inject(ElementRef<HTMLElement>);
   private onScrollListener?: () => void;
 
@@ -22,6 +24,14 @@ export class LayoutComponent {
     if (!mainEl) return;
 
     this.onScrollListener = () => {
+      // Si estamos en una vista de detalle de proyecto, mantener activo 'projects' y no sobreescribir la URL
+      if (this.router.url.includes('/projects/')) {
+        if (this.nav.id() !== 'projects') {
+          this.nav.setActive('projects');
+        }
+        return;
+      }
+
       if (this.nav.isLockedByManualScroll) return;
 
       const mainRect = mainEl.getBoundingClientRect();

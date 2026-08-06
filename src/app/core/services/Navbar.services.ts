@@ -1,10 +1,12 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavItem } from '../models/NavItem.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NavbarServices {
+  private readonly router = inject(Router);
   public readonly id = signal<string>('hero');
 
   public readonly items: NavItem[] = [
@@ -20,13 +22,30 @@ export class NavbarServices {
 
   setActive(id: string) {
     this.id.set(id);
-    history.replaceState(null, '', `#${id}`);
+    if (this.router.url === '/' || this.router.url.startsWith('/#')) {
+      history.replaceState(null, '', `#${id}`);
+    }
   }
 
   goTo(id: string) {
     this.isManualScroll = true;
     this.setActive(id);
 
+    if (window.location.pathname !== '/' && window.location.pathname !== '') {
+      this.router.navigate(['/']).then(() => {
+        setTimeout(() => this.scrollToSection(id), 150);
+      });
+    } else {
+      this.scrollToSection(id);
+    }
+
+    window.clearTimeout(this.scrollTimeout);
+    this.scrollTimeout = window.setTimeout(() => {
+      this.isManualScroll = false;
+    }, 700);
+  }
+
+  private scrollToSection(id: string) {
     const mainContainer = document.querySelector('main');
     const targetElement = document.getElementById(id);
     const topHeader = document.querySelector('nav');
@@ -35,7 +54,6 @@ export class NavbarServices {
       const containerTop = mainContainer.getBoundingClientRect().top;
       const targetTop = targetElement.getBoundingClientRect().top;
       const headerHeight = topHeader ? topHeader.getBoundingClientRect().height : 0;
-      // Offset universal: altura real de la cabecera + 10px de margen de respiro
       const offset = headerHeight > 0 ? headerHeight + 10 : 20;
       const targetPosition = targetTop - containerTop + mainContainer.scrollTop - offset;
 
@@ -43,15 +61,9 @@ export class NavbarServices {
         top: Math.max(0, targetPosition),
         behavior: 'smooth',
       });
-    } else {
-      targetElement?.scrollIntoView({ behavior: 'smooth' });
+    } else if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
     }
-
-    // libera el "candado" cuando el scroll suave termina (aprox.)
-    window.clearTimeout(this.scrollTimeout);
-    this.scrollTimeout = window.setTimeout(() => {
-      this.isManualScroll = false;
-    }, 700);
   }
 
   private scrollTimeout?: number;
@@ -60,3 +72,4 @@ export class NavbarServices {
     return this.isManualScroll;
   }
 }
+
