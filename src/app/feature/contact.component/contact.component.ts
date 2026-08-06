@@ -23,32 +23,52 @@ export class ContactComponent {
   });
 
   onSubmit() {
-    if(this.FormContact.invalid) return;
+    if (this.FormContact.invalid) {
+      this.FormContact.markAllAsTouched();
+      this.msg.add({
+        severity: 'error',
+        summary: 'Campos incompletos',
+        detail: 'Por favor, completa correctamente todos los campos obligatorios.',
+      });
+      return;
+    }
 
     this.isSubmitting.set(true);
 
+    const rawValues = this.FormContact.value;
+    const payload = {
+      name: rawValues.name?.trim(),
+      email: rawValues.email?.trim(),
+      message: rawValues.message?.trim(),
+    };
+
     const formspreeUrl = 'https://formspree.io/f/mqekkqpl';
 
-    this.http.post(formspreeUrl, this.FormContact.value, {
-      headers: { 'Accept': 'application/json' }
-    }).subscribe({
-      next: (response) => {
-        this.isSubmitting.set(false);
-        this.FormContact.reset();
-        this.msg.add({
-          severity: "success",
-          summary: "Enviado correctamente",
-          detail: "Mensaje enviado correctamente"
-        })
-      },
-      error: (error) => {
-        this.isSubmitting.set(false);
-        this.msg.add({
-          severity: "error",
-          summary: "Enviado no enviado",
-          detail: "Ha ocurrido un error al enviar el mensaje, intente de nuevo"
-        })
-      }
-    });
+    this.http
+      .post(formspreeUrl, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      })
+      .subscribe({
+        next: (response) => {
+          this.isSubmitting.set(false);
+          this.FormContact.reset();
+          this.msg.add({
+            severity: 'success',
+            summary: 'Enviado correctamente',
+            detail: 'Mensaje enviado correctamente',
+          });
+        },
+        error: (error) => {
+          this.isSubmitting.set(false);
+          this.msg.add({
+            severity: 'error',
+            summary: 'Error al enviar',
+            detail: 'Ha ocurrido un error al enviar el mensaje, intente de nuevo',
+          });
+        },
+      });
   }
 }
