@@ -38,8 +38,9 @@
   <body class="bg-page text-main antialiased selection:bg-blue-600 selection:text-white">
     <app-root></app-root>
 
-    <!-- Formulario oculto para detección estática de Netlify Forms -->
-    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <!-- Formulario estático para detección de Netlify Forms -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
       <input type="text" name="name" />
       <input type="email" name="email" />
       <textarea name="message"></textarea>

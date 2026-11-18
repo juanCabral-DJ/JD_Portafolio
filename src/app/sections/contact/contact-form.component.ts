@@ -36,7 +36,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
         class="space-y-4"
         name="contact"
         data-netlify="true"
+        data-netlify-honeypot="bot-field"
       >
+        <!-- Campo oculto para Netlify -->
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden">
+          <label>No llenes esto si eres humano: <input name="bot-field" /></label>
+        </p>
+
         <!-- Alerta de error si falla el envío -->
         @if (errorMessage()) {
           <div
@@ -58,6 +65,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
           </label>
           <input
             id="contact-name"
+            name="name"
             type="text"
             formControlName="name"
             placeholder="Tu nombre o empresa"
@@ -84,6 +92,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
           </label>
           <input
             id="contact-email"
+            name="email"
             type="email"
             formControlName="email"
             placeholder="ejemplo@correo.com"
@@ -110,6 +119,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
           </label>
           <textarea
             id="contact-message"
+            name="message"
             rows="4"
             formControlName="message"
             placeholder="¿En qué puedo colaborar contigo o qué requerimiento tienes?"
@@ -175,8 +185,10 @@ export class ContactFormComponent {
     this.isSubmitting.set(true);
     this.errorMessage.set(null);
 
+    const formValue = this.contactForm.value;
+
     try {
-      const formValue = this.contactForm.value;
+      // 1. Intento principal con Netlify Forms
       const body = new URLSearchParams({
         'form-name': 'contact',
         name: formValue.name || '',
@@ -184,23 +196,44 @@ export class ContactFormComponent {
         message: formValue.message || '',
       });
 
-      const response = await fetch('/', {
+      const netlifyResponse = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: body.toString(),
       });
 
-      if (response.ok) {
+      if (netlifyResponse.ok) {
+        this.isSuccess.set(true);
+        this.contactForm.reset();
+        return;
+      }
+
+      // 2. Si Netlify responde 404 (porque el bot aún no procesó el formulario en el drop),
+      // enviamos a través de tu endpoint de Formspree para asegurar que el mensaje llegue a tu correo sin fallar
+      const formspreeResponse = await fetch('https://formspree.io/f/mqekkqpl', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formValue.name,
+          email: formValue.email,
+          message: formValue.message,
+        }),
+      });
+
+      if (formspreeResponse.ok) {
         this.isSuccess.set(true);
         this.contactForm.reset();
       } else {
-        throw new Error('Respuesta no exitosa de Netlify');
+        throw new Error('No se pudo enviar por ninguno de los canales');
       }
     } catch (err) {
-      console.warn('Error al enviar formulario a Netlify:', err);
-      // Si estamos en entorno de desarrollo local sin Netlify, simulamos éxito para probar la UI
-      this.isSuccess.set(true);
-      this.contactForm.reset();
+      console.error('Error al procesar el mensaje:', err);
+      this.errorMessage.set(
+        'Ocurrió un problema de conexión al enviar el mensaje. Por favor escríbeme directamente a juandavidcabral71@gmail.com'
+      );
     } finally {
       this.isSubmitting.set(false);
     }
