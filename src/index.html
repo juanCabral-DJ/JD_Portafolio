@@ -1,19 +1,48 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
-    <title>PortafolioJD</title>
+    <title>Juan David Cabral | Desarrollador Frontend Angular y PrimeNG</title>
     <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Portafolio de Juan David Cabral, Desarrollador Frontend especializado en Angular, PrimeNG y Tailwind CSS. Interfaces limpias, escalables y accesibles."
     />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- Tipografía Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Script anti-parpadeo del tema antes del primer pintado -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('portfolio_theme');
+          var prefersDark =
+            window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = stored === 'dark' || (!stored && prefersDark) ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+          if (theme === 'dark') {
+            document.documentElement.classList.add('p-dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body>
+  <body class="bg-page text-main antialiased selection:bg-blue-600 selection:text-white">
     <app-root></app-root>
+
+    <!-- Formulario oculto para detección estática de Netlify Forms -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
   </body>
 </html>
